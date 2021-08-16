@@ -1,0 +1,191 @@
+*&---------------------------------------------------------------------*
+*                           INITIALIZATION                             *
+*&---------------------------------------------------------------------*
+INITIALIZATION.
+
+*&---------------------------------------------------------------------*
+*                          AT SELECTION-SCREEN                         *
+*&---------------------------------------------------------------------*
+AT SELECTION-SCREEN.
+
+*&---------------------------------------------------------------------*
+*                          START-OF-SELECTION                          *
+*&---------------------------------------------------------------------*
+START-OF-SELECTION.
+*Obtenemos el resultado de la suma
+*  gv_resultado = p_num1 + p_num2.
+*  WRITE:/'El valor:', p_num1, '+ el valor', p_num2, 'es:', gv_resultado.
+*
+**Obtenemos el resultado de la resta
+*  gv_resultado = p_num1 - p_num2.
+*  WRITE:/'El valor:', p_num1, '- el valor', p_num2, 'es:', gv_resultado.
+**Obtenemos el resultado de la multiplicacion
+*  gv_resultado = p_num1 * p_num2.
+*  WRITE:/'El valor:', p_num1, '* el valor', p_num2, 'es:', gv_resultado.
+*
+**Obtenemos el resultado de la division
+*  gv_div = p_num1 / p_num2.
+*  WRITE:/'El valor:', p_num1, '/ el valor', p_num2, 'es:', gv_div.
+
+
+*Obtener solo la parte entera de la div con MOD EL RESIDUO DE LA DIVISION
+*  gv_div = p_num1 MOD p_num2.
+*  WRITE:/'El valor:', p_num1, '/ el valor con MOD', p_num2, 'es:', gv_div.
+*Obtener solo la parte entera de la div con DIV
+*  gv_div = p_num1 DIV p_num2.
+*  WRITE:/'El valor:', p_num1, '/ el valor con DIV', p_num2, 'es:', gv_div.
+*
+*Valor negativo
+*   gv_div = gv_div * -1.
+*  WRITE:/'El valor negativo es:', gv_div.
+*
+*Valor positivo ABS devuelve el valor absoluto de una variable
+*   gv_div = abs( gv_div ).
+*  WRITE:/'El valor positivo es:', gv_div.
+
+**CARACTERES
+*CONCATENATE p_c1 ':' p_c2  INTO gv_resultado2 SEPARATED BY SPACE .
+*WRITE:/'concatenamos los caracteres:', gv_resultado2.
+*
+**REEMPLAZAR CARACTERES. con ALL reemplazamos
+*REPLACE FIRST OCCURRENCE OF 'SOLIDA' IN gv_resultado2 WITH 'BLANDA'.
+*WRITE:/'el caracter reemplazado es:', gv_resultado2.
+*
+**Condensar o formatear todos los espacios en caracteres
+*CONDENSE gv_resultado2.
+*WRITE:/ gv_resultado2.
+*
+**Condensar NO-GAPS saca todos los espacios
+*CONDENSE gv_resultado2 NO-GAPS.
+*WRITE:/ gv_resultado2.
+
+*Buscar por patron una variable interna
+*WRITE:/ 'Buscando: ', p_c1, 'en :', p_c2.
+*Buscando FIND
+*FIND p_c1 IN p_c2 MATCH OFFSET gv_cantidad.
+*WRITE:/ 'La variable de sistema vale: ', sy-subrc.
+*WRITE:/ 'Se encontro lo buscado en la posicion: ', gv_cantidad.
+
+*Buscando SHIFI - reemplaza la variable a partir de la posicion indicada
+*WRITE:/ p_c2.
+*SHIFT p_c2 by gv_cantidad PLACES RIGHT.
+*WRITE:/ p_c2.
+
+*Dividiendo parametros en 2
+*WRITE: / p_c1.
+*SPLIT p_c1 AT ',' INTO gv_resultado1 gv_resultado2.
+*WRITE: / gv_resultado1.
+*WRITE: / gv_resultado2.
+*
+**Contar numeros de caracteres con strlen
+*gv_resultado1 = strlen( p_c1 ).
+*WRITE: / 'El texto', p_c1, 'tiene ', gv_resultado1, 'caracteres' .
+
+*condicional IF
+*= EQ
+*<>NE
+*> GT
+*< LT
+*>=LE
+*<=GE
+
+*IF p_c1 EQ 'ABAP' .
+*  WRITE: / 'El texto en el parametro es ABAP'.
+*ELSEIF p_c1 EQ 'ABAP1' .
+*    WRITE: / 'El texto en el parametro  es ABAP1'.
+*ELSE.
+*  WRITE: / 'El texto en el parametro no es ABAP'.
+*ENDIF.
+
+
+*IF p_c1 < 50 .
+*  WRITE: / 'El numero es menor a 50'.
+*ELSEIF p_c1 = 50 .
+*    WRITE: / 'El numero es igual a 50'.
+*ELSE.
+*  WRITE: / 'El numero no es 50'.
+*ENDIF.
+
+*Condicionales CASE
+*CASE p_c1.
+*  WHEN 1.
+*    WRITE: 'el varlor es 1'.
+*  WHEN 2.
+*    WRITE: 'el varlor es 2' .
+*  WHEN 3.
+*    WRITE: 'el varlor es 3'.
+*  WHEN 4.
+*    WRITE: 'el varlor es 4 '.
+*  WHEN 5.
+*    WRITE: 'el varlor es 5'.
+*  WHEN 6.
+*    WRITE: 'el varlor es 6'.
+*  WHEN 7.
+*    WRITE: 'el varlor es 7'.
+*  WHEN 8.
+*    WRITE: 'el varlor es 8'.
+*  WHEN OTHERS.
+*     WRITE: 'el varlor es otro'.
+*ENDCASE.
+
+*bucle DO repeticion
+*DO p_c1 TIMES.
+*  WRITE: / 'el varlor del ciclo es ', sy-index.
+*  IF sy-index = 100.
+*    exit.
+*
+*  ENDIF.
+*ENDDO.
+
+
+*BUCLE WHILE
+
+*WHILE sy-index <> 100.
+*  WRITE: / 'El valor del ciclo es:', sy-index.
+*
+*ENDWHILE.
+
+*tablas temporal LOOP, insertar en memoria
+es_empleados-id_emp = '123456'.
+es_empleados-nomb_emp = 'roberto'.
+es_empleados-apel_emp = 'perez'.
+APPEND es_empleados to te_empleados.
+
+te_empleados_c-id_emp = '123456'.
+te_empleados_c-nomb_emp = 'sandra'.
+te_empleados_c-apel_emp = 'gonzalez'.
+APPEND te_empleados_c.
+
+WRITE: / 'tabla interna sin cabecera....'.
+LOOP AT te_empleados INTO es_empleados.
+  WRITE: / es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp.
+endloop.
+
+WRITE: / sy-uline.
+WRITE: / 'tabla interna con cabecera....'.
+LOOP AT te_empleados_c.
+  WRITE: / te_empleados_c-id_emp, te_empleados_c-nomb_emp, te_empleados_c-apel_emp.
+endloop.
+
+
+*1 - en este obtenemos todos los campos
+LOOP AT te_empleados INTO es_empleados. "recorre los datos de te_empleados y guarda en es_empleados
+
+*es_empleados-ID_EMP
+*es_empleados-NOMB_EMP
+*es_empleados-APEL_EMP
+*es_empleados-EDAD_EMP
+*es_empleados-SEXO_EMP
+*es_empleados-SUELDO
+*es_empleados-MONEDA
+
+
+ENDLOOP.
+
+*1 -
+LOOP AT te_empleados_c.
+
+
+ENDLOOP.
+
+END-OF-SELECTION.

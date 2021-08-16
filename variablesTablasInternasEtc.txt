@@ -1,0 +1,49 @@
+REPORT  ZHR_EMPLEADOS.
+
+
+TYPES: gv_fecha TYPE d.
+
+*VARIABLE
+
+DATA: gv_nueva_fecha TYPE d VALUE '20210727',
+      gv_nueva_fecha2 like gv_nueva_fecha,
+      gv_id_empleado TYPE zhred_id_empleados,
+      gv_id_empleados2 TYPE zhrtt_empleados-id_emp.
+
+*CONSTANTES
+CONSTANTS gc_color(10) TYPE c VALUE 'BLANCO'.
+
+*ESTRUCTURAS HAY DOS FORMAS DE DECLARAR
+DATA: BEGIN OF es_prueba ,
+  nombre TYPE string,
+  edad TYPE i,
+  END OF es_prueba.
+*finaliza la estructura
+
+
+
+DATA: es_empleados TYPE zhres_empleados.
+
+*es_empleados-ID_EMP = '123' .
+*es_empleados-NOMB_EMP = 'WILSON' .
+*es_empleados-APEL_EMP = 'MILTOS' .
+*es_empleados-EDAD_EMP = '36' .
+*es_empleados-SEXO_EMP = 'M' .
+
+*CONSTANTES
+CONSTANTS gc_color(10) TYPE c VALUE  'blanco'.
+
+*RANGOS es como una tabla en memoria
+RANGES gr_id_emp FOR zhrtt_empleados-id_emp.
+*gr_id_emp-sign
+*gr_id_emp-option
+*gr_id_emp-low
+*gr_id_emp-high
+
+*TABLAS INTERNAS la guarda en memoria
+DATA: te_empleados TYPE TABLE OF zhrtt_empleados.
+
+DATA: BEGIN OF te_table OCCURS 0,
+  fecha TYPE d,
+  hora TYPE t,
+  END OF te_table.

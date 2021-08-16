@@ -1,0 +1,88 @@
+REPORT  ZHR_EMPLEADOS.
+
+TABLES: zhrtt_empleados.
+
+DATA:  gv_resultado TYPE string.
+
+*TABLAS INTERNAS LOOP, tablas temporales
+DATA: te_empleados TYPE TABLE OF zhrtt_empleados,
+      es_empleados LIKE LINE OF te_empleados.
+DATA: te_empleados_c TYPE TABLE OF zhrtt_empleados WITH HEADER LINE.
+
+
+*DATA: gv_resultado TYPE string.
+*crea un cuadro donde colocaremos varios parametros de entrada
+
+*los parametrso no pueden tener mas de 8 caracteres
+*SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE text-001.
+*PARAMETERS: p_id_emp TYPE zhrtt_empleados-id_emp MODIF ID Z01. "Modifica el listado del chekbox
+* PARAMETERS: p_id_emp TYPE zhrtt_empleados-id_emp ." NO-DISPLAY." OBLIGATORY"
+*parametros tipo lista
+*PARAMETERS: p_id_lis TYPE zhrtt_empleados-id_emp AS LISTBOX VISIBLE LENGTH 12 DEFAULT '3'.
+
+*PARAMETERS: p_nom TYPE zhrtt_empleados-NOMB_EMP VISIBLE LENGTH 5.
+*PARAMETERS: p_nom2 TYPE zhrtt_empleados-NOMB_EMP VISIBLE LENGTH 10.
+*PARAMETERS: p_nom3 TYPE zhrtt_empleados-NOMB_EMP VISIBLE LENGTH 40.
+*SELECTION-SCREEN END OF BLOCK b1 .
+
+*chekbox
+*SELECTION-SCREEN BEGIN OF BLOCK b2 WITH FRAME TITLE text-002.
+*PARAMETERS: p_m AS CHECKBOX USER-COMMAND flag,
+*             p_f AS CHECKBOX DEFAULT 'X' USER-COMMAND flag, "marcamos por defecto esta opcion"
+*              p_d AS CHECKBOX USER-COMMAND flag.
+*  SELECTION-SCREEN END OF BLOCK b2.
+
+
+*radiobutton
+*SELECTION-SCREEN BEGIN OF BLOCK part4 WITH FRAME TITLE text-003.
+* PARAMETERS: p_rm RADIOBUTTON GROUP r1,"pertenenen a un grupo llamado r1"
+*              p_rf RADIOBUTTON GROUP r1 DEFAULT 'X', "marcamos por defecto esta opcion"
+*             p_rd RADIOBUTTON GROUP r1.
+
+*saltar dos lineas
+* SELECTION-SCREEN SKIP 2.
+
+
+*    PARAMETERS: p_rm2 RADIOBUTTON GROUP r2,"pertenenen a un grupo llamado r1"
+*             p_rf2 RADIOBUTTON GROUP r2 DEFAULT 'X', "marcamos por defecto esta opcion"
+*             p_rd2 RADIOBUTTON GROUP r2.
+*  SELECTION-SCREEN END OF BLOCK part4.
+
+
+*SELECT OPTION, OPCIONES EN LA SELECCION
+*SELECTION-SCREEN BEGIN OF BLOCK b4 WITH FRAME TITLE text-004.
+*  SELECT-OPTIONS s_id1 FOR zhrtt_empleados-id_emp NO-DISPLAY. "NO-DISPLAY, VISIBLE LENGTH (longitud)
+*  SELECT-OPTIONS s_id2 FOR zhrtt_empleados-id_emp vISIBLE LENGTH 6.
+*  SELECT-OPTIONS s_id3 FOR zhrtt_empleados-id_emp NO-EXTENSION. "OMITE EL BOTON DE SELECCION MULTIPLE
+*  SELECT-OPTIONS s_id4 FOR zhrtt_empleados-id_emp NO INTERVALS. "OMITE LOS INTERVALOS, SOLO AGREGA EL DE SELEC MULTIPLE
+*  SELECTION-SCREEN END OF BLOCK b4.
+*
+*OPERACIONES ARITMETICAS
+*
+*data : gv_resultado TYPE i,
+*       gv_div(10) TYPE p DECIMALS 2.
+*
+*SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-000.
+*  PARAMETERS: p_num1 TYPE i.
+*  PARAMETERS: p_num2 TYPE i.
+*SELECTION-SCREEN END OF BLOCK a.
+
+
+*DATA:  gv_cantidad TYPE i.
+DATA:  gv_resultado1 TYPE string.
+
+DATA:  gv_resultado2 TYPE string.
+
+
+
+*SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-005.
+*  PARAMETERS: p_c1(70) TYPE c.
+**  PARAMETERS: p_c2(70) TYPE c.
+*SELECTION-SCREEN END OF BLOCK a.
+
+
+SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-006.
+*  PARAMETERS: p_c1(70) TYPE c.
+  PARAMETERS: p_c1 TYPE i.
+*  PARAMETERS: p_c2(70) TYPE c.
+SELECTION-SCREEN END OF BLOCK a.

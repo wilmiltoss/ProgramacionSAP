@@ -1,0 +1,40 @@
+REPORT  zhr_empleados.
+
+*&---------------------------------------------------------------------*
+*                           TYPE-POOLS                                 *
+*&---------------------------------------------------------------------*
+
+*TYPE-POOLS: slis.
+
+*&---------------------------------------------------------------------*
+*                           TABLES                                     *
+*&---------------------------------------------------------------------*
+
+*TABLES: zhrtt_empleados.
+
+*&---------------------------------------------------------------------*
+*                           VARIABLES                                     *
+*&---------------------------------------------------------------------*
+
+*DATA: BEGIN OF gt_outtab OCCURS 0.
+*        INCLUDE STRUCTURE zhrtt_empleados.
+*DATA: END OF gt_outtab,
+*      gs_layout TYPE slis_layout_alv,
+*      g_exit_caused_by_caller,
+*      gs_exit_caused_by_user TYPE slis_exit_by_user,
+*      g_repid LIKE sy-repid.
+
+
+*&---------------------------------------------------------------------*
+*                           CONSTANTES                                 *
+*&---------------------------------------------------------------------*
+
+*CONSTANTS gc_marca TYPE c LENGTH 1 VALUE 'X'.
+ 
+*&---------------------------------------------------------------------*
+*                        PARAMETROS DE PANTALLA                        *
+*&---------------------------------------------------------------------*
+SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-000.
+*PARAMETERS: p_id type zhrtt_empleados-id_emp.
+*SELECT-OPTIONS s_id_emp FOR zhrtt_empleados-id_emp.
+SELECTION-SCREEN END OF BLOCK a.
