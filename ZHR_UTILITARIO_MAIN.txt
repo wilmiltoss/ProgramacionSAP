@@ -144,48 +144,262 @@ START-OF-SELECTION.
 *  WRITE: / 'El valor del ciclo es:', sy-index.
 *
 *ENDWHILE.
-
-*tablas temporal LOOP, insertar en memoria
-es_empleados-id_emp = '123456'.
-es_empleados-nomb_emp = 'roberto'.
-es_empleados-apel_emp = 'perez'.
-APPEND es_empleados to te_empleados.
-
-te_empleados_c-id_emp = '123456'.
-te_empleados_c-nomb_emp = 'sandra'.
-te_empleados_c-apel_emp = 'gonzalez'.
-APPEND te_empleados_c.
-
-WRITE: / 'tabla interna sin cabecera....'.
-LOOP AT te_empleados INTO es_empleados.
-  WRITE: / es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp.
-endloop.
-
-WRITE: / sy-uline.
-WRITE: / 'tabla interna con cabecera....'.
-LOOP AT te_empleados_c.
-  WRITE: / te_empleados_c-id_emp, te_empleados_c-nomb_emp, te_empleados_c-apel_emp.
-endloop.
-
-
-*1 - en este obtenemos todos los campos
-LOOP AT te_empleados INTO es_empleados. "recorre los datos de te_empleados y guarda en es_empleados
-
-*es_empleados-ID_EMP
-*es_empleados-NOMB_EMP
-*es_empleados-APEL_EMP
-*es_empleados-EDAD_EMP
-*es_empleados-SEXO_EMP
-*es_empleados-SUELDO
-*es_empleados-MONEDA
+*
+**tablas temporal LOOP, insertar en memoria
+*es_empleados-id_emp = '123456'.
+*es_empleados-nomb_emp = 'roberto'.
+*es_empleados-apel_emp = 'perez'.
+*APPEND es_empleados to te_empleados.
+*
+*te_empleados_c-id_emp = '123456'.
+*te_empleados_c-nomb_emp = 'sandra'.
+*te_empleados_c-apel_emp = 'gonzalez'.
+*APPEND te_empleados_c.
+*
+*WRITE: / 'tabla interna sin cabecera....'.
+*LOOP AT te_empleados INTO es_empleados.
+*  WRITE: / es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp.
+*endloop.
+*
+*WRITE: / sy-uline.
+*WRITE: / 'tabla interna con cabecera....'.
+*LOOP AT te_empleados_c.
+*  WRITE: / te_empleados_c-id_emp, te_empleados_c-nomb_emp, te_empleados_c-apel_emp.
+*endloop.
 
 
-ENDLOOP.
+**1 - en este obtenemos todos los campos
+*LOOP AT te_empleados INTO es_empleados. "recorre los datos de te_empleados y guarda en es_empleados
+*
+**es_empleados-ID_EMP
+**es_empleados-NOMB_EMP
+**es_empleados-APEL_EMP
+**es_empleados-EDAD_EMP
+**es_empleados-SEXO_EMP
+**es_empleados-SUELDO
+**es_empleados-MONEDA
+*
+*ENDLOOP.
+*
+**1 -
+*LOOP AT te_empleados_c.
+*
+*
+*ENDLOOP.
 
-*1 -
-LOOP AT te_empleados_c.
+************TABLAS INTERNAS, TEMPORALES*********************
+
+*UTILIZANDO MODIFY
+*DO 5 TIMES.
+** es_empleados-id_emp = sy-index."sy-index crea index automatico
+**ejm concatenamos caracteres sy-index al nombre
+*  es_empleados-id_emp = sy-index.
+*  es_empleados-nomb_emp = sy-index.
+*CONDENSE es_empleados-nomb_emp. "CONDENSE elimina todos los espacios en blanco
+*CONCATENATE 'ROBERTO' es_empleados-nomb_emp INTO es_empleados-nomb_emp.
+** es_empleados-nomb_emp = 'roberto'.
+*  es_empleados-apel_emp = 'perez'.
+*APPEND es_empleados to te_empleados.
+*
+*MOVE sy-index to: te_empleados_c-id_emp,te_empleados_c-nomb_emp.
+*CONDENSE te_empleados_c-nomb_emp.
+*CONCATENATE 'sandra' te_empleados_c-nomb_emp INTO te_empleados_c-nomb_emp.
+**te_empleados_c-id_emp = '123456'.
+**te_empleados_c-nomb_emp = 'sandra'.
+*te_empleados_c-apel_emp = 'gonzalez'.
+*APPEND te_empleados_c.
+*
+*ENDDO.
+*
+******TABLA SIN CABECERAS
+*WRITE: / 'tabla interna sin cabecera original....'.
+*LOOP AT te_empleados INTO es_empleados.
+*  WRITE: / es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp.
+**  CLEAR: es_empleados-apel_emp.
+**  MODIFY te_empleados FROM es_empleados INDEX sy-tabix.
+*endloop.
+*
+*WRITE: / 'tabla interna sin cabecera RECORRER SEGUN PARAMETROS...'.
+*LOOP AT te_empleados INTO es_empleados FROM 2 TO 4. " DEL 2 AL 4
+*  WRITE: / es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp.
+*endloop.
+*
+*WRITE: / 'tabla interna sin cabecera MODIFICADA ELIMINADA....'.
+*DELETE te_empleados INDEX 1.
+*LOOP AT te_empleados INTO es_empleados.
+*  WRITE: / es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp.
+*endloop.
+*
+*
+*WRITE: / 'tabla interna sin cabecera MODIFICADA ELIMINA todos los registros duplicados con condicion...'.
+*
+*LOOP AT te_empleados INTO es_empleados.
+*  IF sy-tabix EQ 3.
+*    DELETE te_empleados INDEX sy-tabix.
+*    CONTINUE.
+*  ENDIF.
+*
+*  WRITE: / es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp.
+*endloop.
+*
+*WRITE: / 'tabla interna sin cabecera MODIFICADA ELIMINA todos los registros duplicados...'.
+*DELETE ADJACENT DUPLICATES FROM te_empleados COMPARING apel_emp.
+*LOOP AT te_empleados INTO es_empleados.
+*  WRITE: / es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp.
+*endloop.
 
 
-ENDLOOP.
+*WRITE: / sy-uline.
+
+
+*TABLAS INTERNAS COLLECT ; realiza la suma de una coleccion de datos
+
+*DO 6 TIMES.
+*  es_empleados-id_emp = 1.
+*  es_empleados-nomb_emp = 'JUAN'.
+*  es_empleados-apel_emp = 'ROMERO'.
+*  es_empleados-sueldo = '1000'.
+*  es_empleados-moneda = 'USD'.
+*  APPEND es_empleados to te_empleados.
+**COLLECT es_empleados INTO te_empleados.
+**
+**  te_empleados_c-id_emp = 2.
+**  te_empleados_c-nomb_emp = 'MARIA'.
+**  te_empleados_c-apel_emp = 'SANCHEZ'.
+**  te_empleados_c-sueldo = '1000'.
+**  te_empleados_c-moneda = 'USD'.
+***  APPEND te_empleados_c.
+**  COLLECT te_empleados_c.
+*ENDDO.
+*WRITE: / '|','tabla interna sin cabecera original...',266 '|'.
+*
+*LOOP AT te_empleados INTO es_empleados.
+*  WRITE: / '|',es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp, es_empleados-sueldo, es_empleados-moneda, 266 '|'.
+*ENDLOOP.
+*
+*WRITE: / sy-uline.
+*
+*WRITE: / '|','tabla interna con total..',266 '|'.
+*REFRESH te_empleados. "Limpiar el contenido de la tabla temporal interna.
+*CLEAR te_empleados.  "Limpia la cabecera de tabla temporal interna.
+*
+*DO 6 TIMES.
+*  es_empleados-id_emp = 1.
+*  es_empleados-nomb_emp = 'JUAN'.
+*  es_empleados-apel_emp = 'ROMERO'.
+*  es_empleados-sueldo = '1000'.
+*  es_empleados-moneda = 'USD'.
+*  COLLECT es_empleados INTO te_empleados.
+*ENDDO.
+*
+*
+*LOOP AT te_empleados INTO es_empleados.
+*  WRITE: / '|',es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp, es_empleados-sueldo, es_empleados-moneda, 266 '|'.
+*ENDLOOP.
+
+
+
+
+*WRITE: / '|','tabla interna con cabecera...',266 '|'.
+*LOOP AT te_empleados_c.
+*  WRITE: / '|',te_empleados_c-id_emp, te_empleados_c-nomb_emp, te_empleados_c-apel_emp, te_empleados_c-sueldo, te_empleados_c-moneda, 266 '|'.
+*ENDLOOP.
+
+*WRITE: / sy-uline.
+
+*
+******TABLA CON CABECERA
+*WRITE: / 'tabla interna con cabecera original....'.
+*LOOP AT te_empleados_c.
+*  WRITE: / te_empleados_c-id_emp, te_empleados_c-nomb_emp, te_empleados_c-apel_emp.
+*  CLEAR: te_empleados_c-nomb_emp.
+*  MODIFY te_empleados_c.
+*endloop.
+*
+*WRITE: / 'tabla interna sin cabecera MODIFICADA....'.
+*LOOP AT te_empleados_c.
+*  WRITE: / te_empleados_c-id_emp, te_empleados_c-nomb_emp, te_empleados_c-apel_emp.
+*endloop.
+
+  es_productos-id_prod = 'TECLADO'.
+
+
+
+  DO 3 TIMES.
+    es_productos-cat_prod = ( sy-index * 2 ) + 10.
+    es_productos-precio_prod = ( sy-index ** 2 ) + 8.
+    INSERT es_productos INTO TABLE te_productos.
+
+  ENDDO.
+
+  es_productos-id_prod = 'MONITOR' .
+  DO 3 TIMES.
+    es_productos-cat_prod = ( sy-index * 2 ) + 10.
+    es_productos-precio_prod = ( sy-index ** 2 ) + 20.
+    INSERT es_productos INTO TABLE te_productos.
+
+  ENDDO.
+
+  SORT te_productos by id_prod ASCENDING cat_prod DESCENDING."Ordena las tablas temporales por id_prod dscendente/ascendente
+  LOOP AT te_productos INTO es_productos.
+    es_productos2 = es_productos.
+    WRITE: / es_productos2-id_prod, es_productos2-cat_prod, es_productos2-precio_prod.
+
+  ENDLOOP.
+
+  WRITE: / sy-uline.
+*USO DE STOP
+  LOOP AT te_productos INTO es_productos.
+    CHECK es_productos-cat_prod = 12 or es_productos-id_prod = 'TECLADO'. "con CHECK si la condicion se cumple continua
+    IF sy-tabix EQ 2.
+*      STOP."permite detener la ejecucion del programa
+*      EXIT. "uso de exit
+      CONTINUE.
+    ENDIF.
+    es_productos2 = es_productos.
+    WRITE: / es_productos2-id_prod, es_productos2-cat_prod, es_productos2-precio_prod , 'uso de exit,continue y stop'.
+  ENDLOOP.
+
+
+  SKIP.
+
+  ULINE.
+
+  WRITE: / sy-uline.
+
+  LOOP AT te_productos INTO es_productos.
+    es_productos2 = es_productos.
+*  AT FIRST. "AT FIRST Se activa solo cuando se recorre el primer registro de la tabla interna o temporal
+*      WRITE: / es_productos2-id_prod, es_productos2-cat_prod, es_productos2-precio_prod, 'El primer registro'.
+*  ENDAT.
+
+* AT LAST. "AT LAST Se activa solo cuando se recorre el ULTIMO registro de la tabla interna o temporal
+*      WRITE: / es_productos2-id_prod, es_productos2-cat_prod, es_productos2-precio_prod, 'El ultimo registro'.
+* ENDAT.
+*
+*ENDLOOP.
+
+* AT NEW id_prod. "AT NEW obtiene el primer registro de la agrupacion
+*      WRITE: / es_productos2-id_prod, es_productos2-cat_prod, es_productos2-precio_prod, 'El primer registro del c/ grupo'.
+* ENDAT.
+
+*  AT END OF id_prod. "AT NEW obtiene el ultimo registro de la agrupacion
+*      WRITE: / es_productos2-id_prod, es_productos2-cat_prod, es_productos2-precio_prod, 'El ultimo registro del c/ grupo'.
+* ENDAT.
+
+    AT LAST.
+      SUM. "SUM sumatoria de los registros con campos numericos
+      WRITE: / 'Total suma', es_productos-cat_prod, es_productos-precio_prod, 'El ultimo registro'.
+    ENDAT.
+
+  ENDLOOP.
+
+*LEER UNA TABLA INTERNA
+
+*READ TABLE TE_PRODUCTOS INTO es_productos2 INDEX 3."lee el 3er registro
+  READ TABLE TE_PRODUCTOS INTO es_productos2 WITH KEY CAT_PROD = '16'."lee el q tiene la cat_prod a 16
+  WRITE: / es_productos2-id_prod, es_productos2-cat_prod, es_productos2-precio_prod.
+
 
 END-OF-SELECTION.
+  WRITE:  'fin' .
