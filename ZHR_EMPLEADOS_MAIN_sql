@@ -1,0 +1,220 @@
+
+*&---------------------------------------------------------------------*
+*                           INITIALIZATION                             *
+*&---------------------------------------------------------------------*
+INITIALIZATION.
+
+*&---------------------------------------------------------------------*
+*                          AT SELECTION-SCREEN                         *
+*&---------------------------------------------------------------------*
+AT SELECTION-SCREEN.
+
+*&---------------------------------------------------------------------*
+*                          START-OF-SELECTION                          *
+*&---------------------------------------------------------------------*
+START-OF-SELECTION.
+
+*  SELECT MAX( edad_emp ) "SINGLE trae un solo dato SINGLE apel_emp
+*        FROM zhrtt_empleados
+*    INTO zhrtt_empleados-edad_emp. "se utiliza la sentencia INTO para alojar los datos
+**  WRITE: / zhrtt_empleados-id_emp, zhrtt_empleados-NOMB_EMP,zhrtt_empleados-APEL_EMP.
+*  WRITE: / zhrtt_empleados-edad_emp.
+*********************************************************************************************
+
+**  ENDSELECT.
+*  WRITE: / sy-uline.
+*
+*  SELECT *
+*        FROM zhrtt_empleados
+*    INTO TABLE te_emp. "se utiliza la sentencia INTO para alojar los datos
+**  WRITE: / zhrtt_empleados-id_emp, zhrtt_empleados-NOMB_EMP,zhrtt_empleados-APEL_EMP.
+*
+*  LOOP AT te_emp INTO es_emp.
+*    WRITE: / es_emp-edad_emp.
+*  ENDLOOP.
+******************************************************************************************
+*  WRITE: / sy-uline.
+*
+** APPENDING TABLE AGREGA REGISTROS A LA CONSULTA MIENTRAS INTO TABLE lo reemplaza al existente
+*  SELECT *
+*      FROM zhrtt_empleados
+*     INTO TABLE te_emp "se utiliza la sentencia INTO para alojar los datos
+*    WHERE edad_emp > 50.
+*
+**APPENDING TABLE te_emp.
+*
+*  LOOP AT te_emp INTO es_emp.
+*    WRITE: / es_emp-edad_emp.
+*  ENDLOOP.
+*
+*  WRITE: / sy-uline.
+
+*  SELECT *
+*        FROM zhrtt_empleados
+*    APPENDING TABLE te_emp.
+*
+*  LOOP AT te_emp INTO es_emp.
+*    WRITE: / es_emp-edad_emp.
+*  ENDLOOP.
+
+**CLAUSULA WHERE usando  FOR ALL ENTRIES
+*es_emp-edad_emp = 25.
+*append es_emp to te_edades.
+*es_emp-edad_emp = 55 .
+*append es_emp to te_edades.
+*
+*  SELECT *
+*      FROM zhrtt_empleados
+*     INTO TABLE te_emp "se utiliza la sentencia INTO para alojar los datos
+*    FOR ALL ENTRIES IN te_edades "con una tabla interna
+*    WHERE edad_emp eq te_edades-edad_emp.
+*
+*  LOOP AT te_emp INTO es_emp.
+*    WRITE: / es_emp-edad_emp.
+*  ENDLOOP.
+*
+**CLAUSULA WHERE usando AND or
+*  SELECT *
+*      FROM zhrtt_empleados
+*     INTO TABLE te_emp "se utiliza la sentencia INTO para alojar los datos
+*    WHERE edad_emp > 30
+*    AND APEL_EMP = 'Romero'
+*    GROUP BY apel_emp.
+*
+*  LOOP AT te_emp INTO es_emp.
+*    WRITE: / es_emp-edad_emp, es_emp-nomb_emp, es_emp-apel_emp.
+*  ENDLOOP.
+
+** CLAUSULA group by y gruop by
+*  SELECT sexo_emp
+*      FROM zhrtt_empleados
+*     INTO CORRESPONDING FIELDS OF TABLE te_emp
+*
+*    GROUP BY sexo_emp
+*    ORDER BY sexo_emp DESCENDING.
+*
+*  LOOP AT te_emp INTO es_emp.
+*    WRITE: / es_emp-sexo_emp.
+*  ENDLOOP.
+
+
+* CLAUSULA INSERT
+  es_emp-id_emp = '1000029'.
+  es_emp-nomb_emp = 'SAP44'.
+  es_emp-apel_emp = 'ABAP44'.
+  es_emp-edad_emp = '46'.
+  es_emp-sexo_emp = 'D'.
+  es_emp-sueldo = '55556'.
+  es_emp-moneda = 'USD'.
+
+*insertar directo
+
+*  INSERT  zhrtt_empleados from es_emp.
+*  IF sy-subrc IS INITIAL.
+*    WRITE:/ 'Se inserto el registro'.
+*    else.
+*       WRITE:/ 'error'.
+*  ENDIF.
+
+*insertar desde tabla interna
+*  APPEND es_emp to te_emp.
+*
+*  INSERT  zhrtt_empleados from TABLE te_emp.
+*  IF sy-subrc IS INITIAL.
+*    WRITE:/ 'Se inserto el registro en tala interna'.
+*  else.
+*    WRITE:/ 'error'.
+*  ENDIF.
+
+*insertar con do
+
+*  DO 5 TIMES.
+*    es_emp-id_emp = es_emp-id_emp + 1.
+*    INSERT  zhrtt_empleados from es_emp.
+*    IF sy-subrc IS INITIAL.
+*      WRITE:/ 'Se inserto el registro en tala interna'.
+*    else.
+*      WRITE:/ 'error'.
+*    ENDIF.
+*  ENDDO.
+*
+*  WRITE: / sy-uline.
+*
+*  SELECT *
+*     FROM zhrtt_empleados
+*    INTO TABLE te_emp.
+*
+*  LOOP AT te_emp INTO es_emp.
+*    WRITE: / es_emp-id_emp,  es_emp-edad_emp, es_emp-nomb_emp, es_emp-apel_emp.
+*  ENDLOOP.
+*
+
+* CLAUSULA UPDATE**************************************************************************
+*
+*  es_emp-id_emp = '1000029'.
+*  es_emp-nomb_emp = 'SAP44'.
+*  es_emp-apel_emp = 'ABAP555'.
+*  es_emp-edad_emp = '46'.
+*  es_emp-sexo_emp = 'D'.
+*  es_emp-sueldo = '55556'.
+*  es_emp-moneda = 'USD'.
+*  APPEND es_emp to te_emp.
+*
+*  es_emp-id_emp = '1000025'.
+*  es_emp-nomb_emp = 'SAP'.
+*  es_emp-apel_emp = 'ABAP77777'.
+*  es_emp-edad_emp = '46'.
+*  es_emp-sexo_emp = 'D'.
+*  es_emp-sueldo = '55556'.
+*  es_emp-moneda = 'USD'.
+*  APPEND es_emp to te_emp.
+*
+*  UPDATE zhrtt_empleados SET nomb_emp = 'SAP002' WHERE id_emp = '0001000004'.
+* UPDATE zhrtt_empleados from es_emp. "actualiza segun parametros de la estructura
+*  UPDATE zhrtt_empleados from TABLE te_emp. "actualiza desde una tabla interna
+*
+*    IF sy-subrc IS INITIAL.
+*      WRITE:/ 'Se actualizo el registro'.
+*    else.
+*      WRITE:/ 'error'.
+*    ENDIF.
+*
+*  WRITE: / sy-uline.
+
+
+* CLAUSULA DELETE**************************************************************************
+*  es_emp-id_emp = '1000025'.
+*  es_emp-nomb_emp = 'SAP'.
+*  es_emp-apel_emp = 'ABAP555'.
+*  es_emp-edad_emp = '46'.
+*  es_emp-sexo_emp = 'D'.
+*  es_emp-sueldo = '55556'.
+*  es_emp-moneda = 'USD'.
+*  APPEND es_emp to te_emp.
+**DELETE zhrtt_empleados FROM es_emp.
+**DELETE FROM zhrtt_empleados where id_emp = '1000027'.
+*
+*DELETE zhrtt_empleados  FROM es_emp.
+**ROLLBACK WORK. "SE UTILIZA PARA DESACER LA EJECUCION
+*COMMIT WORK. "SE UTILIZA PARA CONFIRMAR LA EJECUCION, LO CONTRARIO DEL ROLLBACK
+*
+*    IF sy-subrc IS INITIAL.
+*      WRITE:/ 'Se elimino el registro'.
+*    else.
+*      WRITE:/ 'error'.
+*    ENDIF.
+
+* CLAUSULA INNER JOIN**************************************************************************
+  SKIP.
+  SELECT a~TRKORR a~as4date a~as4time b~object b~obj_name as nombre
+    from e070 as a INNER JOIN e071 as b on a~TRKORR = b~TRKORR
+    INTO TABLE te_ordenes
+    UP TO 5 ROWS "limita la cantidad de registros a consultar
+    where a~trkorr like 'SAPKD%' .
+
+  LOOP AT te_ordenes INTO es_ordenes.
+    WRITE: / es_ordenes-trkorr,'|',es_ordenes-as4date,'|',es_ordenes-as4time,'|',es_ordenes-nombre,'|'.
+  ENDLOOP.
+
+
+END-OF-SELECTION.
