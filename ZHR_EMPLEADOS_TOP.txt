@@ -86,3 +86,18 @@ SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-006.
   PARAMETERS: p_c1 TYPE i.
 *  PARAMETERS: p_c2(70) TYPE c.
 SELECTION-SCREEN END OF BLOCK a.
+*Creamos las tablas internas temporales para guardar los datos del select
+*DATA: te_emp TYPE TABLE OF ZHRTT_EMPLEADOS.
+*DATA: es_emp LIKE LINE OF te_emp.
+*DATA:  te_edades type TABLE OF zhrtt_empleados.
+
+*Creamos las tablas para el JOIN******************
+
+*DATA: BEGIN OF es_ordenes,
+*    trkorr TYPE e070-trkorr,
+*    as4date TYPE e070-as4date,
+*    as4time TYPE e070-as4time,
+*    object TYPE e071-object,
+*    nombre TYPE e071-obj_name,
+*  END OF es_ordenes.
+*DATA: te_ordenes LIKE TABLE OF es_ordenes.
