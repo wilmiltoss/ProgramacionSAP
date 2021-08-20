@@ -215,6 +215,36 @@ START-OF-SELECTION.
   LOOP AT te_ordenes INTO es_ordenes.
     WRITE: / es_ordenes-trkorr,'|',es_ordenes-as4date,'|',es_ordenes-as4time,'|',es_ordenes-nombre,'|'.
   ENDLOOP.
+  
+  ****************************SELECT CON IN DESDE UN select-option*************
+
+  SELECT *
+    FROM zhrtt_empleados
+    INTO TABLE te_empleados
+    WHERE id_emp in s_id_emp." POR ID O POR RANGO
+
+  LOOP AT te_empleados INTO es_empleados.
+    WRITE: / es_empleados-id_emp, '|' , es_empleados-nomb_emp, '|' , es_empleados-apel_emp, '|' ,
+             es_empleados-edad_emp, '|' , es_empleados-sexo_emp, '|' , es_empleados-sueldo, '|' ,
+              es_empleados-moneda.
+  ENDLOOP.
+
+  DATA: es_id_emp LIKE LINE OF s_id_emp.
+
+  ULINE.
+
+  LOOP AT s_id_emp INTO es_id_emp.
+    WRITE: / es_id_emp-sign, es_id_emp-option, es_id_emp-low, es_id_emp-HIGH,.
+  ENDLOOP.
+
+  ULINE.
+  
+  
+  
+  
+  
+  
+  
 
 
 END-OF-SELECTION.
