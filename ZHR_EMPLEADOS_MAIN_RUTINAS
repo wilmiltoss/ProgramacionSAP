@@ -1,0 +1,40 @@
+
+*&---------------------------------------------------------------------*
+*                           INITIALIZATION                             *
+*&---------------------------------------------------------------------*
+INITIALIZATION.
+
+*&---------------------------------------------------------------------*
+*                          AT SELECTION-SCREEN                         *
+*&---------------------------------------------------------------------*
+AT SELECTION-SCREEN.
+
+*&---------------------------------------------------------------------*
+*                          START-OF-SELECTION                          *
+*&---------------------------------------------------------------------*
+START-OF-SELECTION.
+
+
+
+
+
+****************************USO DE LAS SUBRUTINAS PERFORM 2*************
+  CLEAR gv_flag_exito.
+
+  PERFORM buscar_datos IN PROGRAM zhr_utilitario TABLES te_empleados
+                       USING '1000025' " este es fijo no cambia
+                       CHANGING gv_flag_exito."CHANGING el valor q le pasamos puede cambia
+
+END-OF-SELECTION.
+
+
+
+**para uso de las rutinas 2
+
+  IF gv_flag_exito IS NOT INITIAL.
+    PERFORM imprimir_datos IN PROGRAM zhr_utilitario TABLES te_empleados."llamamos a la clase zhr_utilitario
+    PERFORM finalizar IN PROGRAM zhr_utilitario.
+  ELSE.
+    WRITE: / 'No se encontraron valores para la busqueda empleados'.
+
+  ENDIF.
