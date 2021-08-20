@@ -1,0 +1,23 @@
+
+*&---------------------------------------------------------------------*
+*                           INITIALIZATION                             *
+*&---------------------------------------------------------------------*
+INITIALIZATION.
+
+*&---------------------------------------------------------------------*
+*                          AT SELECTION-SCREEN                         *
+*&---------------------------------------------------------------------*
+AT SELECTION-SCREEN.
+
+*&---------------------------------------------------------------------*
+*                          START-OF-SELECTION                          *
+*&---------------------------------------------------------------------*
+START-OF-SELECTION.
+
+* SUBMIT hace el llamado a otro programa externo y muestra por via Selection por return
+*SUBMIT zhr_utilitario VIA SELECTION-SCREEN AND RETURN. "opcion 1
+SUBMIT zhr_utilitario WITH p_id_emp eq '1000026' AND RETURN. "opcion 2
+
+WRITE: / 'Retorno al programa principal'.
+
+END-OF-SELECTION.
