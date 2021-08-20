@@ -1,0 +1,34 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZHR_UTILITARIO_TOP
+*&---------------------------------------------------------------------*
+
+
+REPORT  ZHR_EMPLEADOS.
+
+TABLES: zhrtt_empleados,e070.
+
+
+*PARA EL USO DE IN EN SELECT----------
+DATA: te_empleados TYPE TABLE OF zhrtt_empleados."tabla interna
+DATA: es_empleados LIKE LINE OF te_empleados." estructura
+
+
+**PARA CREAR PARAMETROS DE ENTRADAS PARA EL WHERE
+*SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-000.
+*SELECT-OPTIONS s_id_emp FOR zhrtt_empleados-id_emp."SELECT-OPTIONS se comporta como una tabla interna
+*SELECTION-SCREEN END OF BLOCK a.
+
+*VARIABLES PARA EL COUNT
+*DATA: gv_cant_registros TYPE i.
+*DATA: gv_max_sueldo LIKE es_empleados-sueldo.
+*DATA: gv_min_sueldo LIKE es_empleados-sueldo.
+*DATA: gv_avg_sueldo LIKE es_empleados-sueldo.
+*DATA: gv_sum_sueldo LIKE es_empleados-sueldo.
+
+
+*PARA USO DE LAS SUBRUTINAS PERFORM
+DATA: gv_flag_exito TYPE c.
+
+SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-000.
+  PARAMETERS p_id_emp TYPE zhrtt_empleados-id_emp.
+SELECTION-SCREEN END OF BLOCK a.
