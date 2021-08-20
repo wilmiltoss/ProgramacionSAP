@@ -1,0 +1,41 @@
+
+*&---------------------------------------------------------------------*
+*                           INITIALIZATION                             *
+*&---------------------------------------------------------------------*
+INITIALIZATION.
+
+*&---------------------------------------------------------------------*
+*                          AT SELECTION-SCREEN                         *
+*&---------------------------------------------------------------------*
+AT SELECTION-SCREEN.
+
+*&---------------------------------------------------------------------*
+*                          START-OF-SELECTION                          *
+*&---------------------------------------------------------------------*
+START-OF-SELECTION.
+****************ejemplo de como llamar a una transaccion
+*opcion 1
+*CALL TRANSACTION 'SE11'.
+*opcion 2
+*CALL TRANSACTION 'SE09' AND SKIP FIRST SCREEN. "CON ESTE SALTA LA 1RA PANTALLA
+
+*opcion 3
+  CLEAR es_bdcdata_va.
+  es_bdcdata_va-program = 'SAPLSD_ENTRY' .
+  es_bdcdata_va-dynpro = '1000' .
+  es_bdcdata_va-dynbegin = 'X' .
+ APPEND es_bdcdata_va to te_bdcdata_tab.
+
+  CLEAR es_bdcdata_va.
+  es_bdcdata_va-fnam = 'RSRD1-TBMA_VAL'."es el parametro de entrada
+  es_bdcdata_va-fval = 'ZHRTT_EMPLEADOS' ." es el valor que va mostrar
+ APPEND es_bdcdata_va to te_bdcdata_tab .
+
+  es_opt-dismode = 'E'.
+  es_opt-defsize = 'X'.
+*llama al SE11 colocandole todo lo que necesitamos en la pantalla
+*hace referencia al te_bcdata_tab y configuramos como va procesar con es_opt
+ CALL TRANSACTION 'SE11' USING te_bdcdata_tab OPTIONS FROM es_opt.
+*WRITE: / 'Retorno al programa principal'.
+
+END-OF-SELECTION.
