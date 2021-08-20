@@ -1,0 +1,53 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZHR_EMPLEADOS_RUT lo utilizamos para segmentar nuestro codigo
+*                     para modularizar
+*&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Form  BUSCAR_DATOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_TE_EMPLEADOS  text
+*      -->P_P_ID_EMP  text
+*      <--P_GV_FLAG_EXITO  text
+
+*---------------------------include de rutina ------------------*
+FORM buscar_datos  TABLES   P_TE_EMPLEADOS LIKE TE_EMPLEADOS "la tabla P_TE_EMPLEADOS va ser igual a TE_EMPLEADOS
+
+                   USING    P_P_ID_EMP TYPE zhrtt_empleados-id_emp  "P_P_ID_EMP va ser igual zhrtt_empleados-id_emp
+                   CHANGING P_GV_FLAG_EXITO TYPE c. "P_GV_FLAG_EXITO va ser del mismo tipo C va guardar un solo valor de longitu 1
+
+  CLEAR p_te_empleados."limpiamos la tabla interna
+
+  SELECT *
+    FROM zhrtt_empleados
+    INTO TABLE p_te_empleados
+    WHERE id_emp eq p_p_id_emp."le pasamos el parametro p_p_id_emp
+*si tiene resultado marcamos con x la variable de exito
+  IF sy-subrc IS INITIAL.
+    p_gv_flag_exito = 'X'.
+
+  ELSE.
+    p_gv_flag_exito = ''."sino encuentra nada exito vacio
+
+  ENDIF.
+
+
+
+ENDFORM.                    " BUSCAR_DATOS
+*&---------------------------------------------------------------------*
+*&      Form  IMPRIMIR_DATOS
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_TE_EMPLEADOS  text
+*----------------------------------------------------------------------*
+FORM IMPRIMIR_DATOS  TABLES   P_TE_EMPLEADOS LIKE te_empleados.
+  LOOP AT p_te_empleados INTO es_empleados.
+    WRITE:/ es_empleados-id_emp, es_empleados-nomb_emp, es_empleados-apel_emp.
+  ENDLOOP.
+
+ENDFORM.                    " IMPRIMIR_DATOS
+FORM finalizar.
+  WRITE: / 'FIN DE RUTINA utilitarios' .
+ENDFORM .
