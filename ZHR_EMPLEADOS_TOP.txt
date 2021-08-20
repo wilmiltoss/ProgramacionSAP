@@ -102,7 +102,7 @@ SELECTION-SCREEN END OF BLOCK a.
 *  END OF es_ordenes.
 *DATA: te_ordenes LIKE TABLE OF es_ordenes.
 
-
+*CREA VARIANTES DE ENTRADA
 SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-000.
 SELECT-OPTIONS s_id_emp FOR zhrtt_empleados-id_emp."SELECT-OPTIONS se comporta como una tabla interna
 SELECTION-SCREEN END OF BLOCK a.
