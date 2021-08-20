@@ -106,5 +106,21 @@ SELECTION-SCREEN END OF BLOCK a.
 SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-000.
 SELECT-OPTIONS s_id_emp FOR zhrtt_empleados-id_emp."SELECT-OPTIONS se comporta como una tabla interna
 SELECTION-SCREEN END OF BLOCK a.
+********************************************DE LAS RUTINAS**********************************************************************
 
+*PARA USO DE LAS SUBRUTINAS PERFORM 2
+DATA: gv_resultado TYPE i, gv_div(10) TYPE p DECIMALS 2.
+DATA: te_empleados TYPE TABLE OF zhrtt_empleados.
+DATA: es_empleados LIKE LINE OF te_empleados.
+DATA: gv_flag_exito TYPE c.
+
+
+
+
+*PARA USO DE LAS SUBRUTINAS PERFORM 2
+
+SELECTION-SCREEN BEGIN OF BLOCK a WITH FRAME TITLE text-000.
+  PARAMETERS: p_num1 TYPE i.
+  PARAMETERS: p_num2 TYPE i.
+SELECTION-SCREEN END OF BLOCK a.
 
