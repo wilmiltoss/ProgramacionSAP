@@ -57,7 +57,7 @@ START-OF-SELECTION.
 *    WRITE: / es_emp-edad_emp.
 *  ENDLOOP.
 
-**CLAUSULA WHERE usando  FOR ALL ENTRIES
+*****************************************CLAUSULA WHERE usando  FOR ALL ENTRIES*********************************************
 *es_emp-edad_emp = 25.
 *append es_emp to te_edades.
 *es_emp-edad_emp = 55 .
@@ -149,7 +149,7 @@ START-OF-SELECTION.
 *  ENDLOOP.
 *
 
-* CLAUSULA UPDATE**************************************************************************
+* ***********************************CLAUSULA UPDATE**************************************************************************
 *
 *  es_emp-id_emp = '1000029'.
 *  es_emp-nomb_emp = 'SAP44'.
@@ -204,7 +204,7 @@ START-OF-SELECTION.
 *      WRITE:/ 'error'.
 *    ENDIF.
 
-* CLAUSULA INNER JOIN**************************************************************************
+* ***************************CLAUSULA INNER JOIN**************************************************************************
   SKIP.
   SELECT a~TRKORR a~as4date a~as4time b~object b~obj_name as nombre
     from e070 as a INNER JOIN e071 as b on a~TRKORR = b~TRKORR
@@ -238,6 +238,62 @@ START-OF-SELECTION.
   ENDLOOP.
 
   ULINE.
+  
+  
+****************************SELECT CON IN con valores fijos*************
+
+*  SELECT *
+*    FROM zhrtt_empleados
+*    INTO TABLE te_empleados
+*    WHERE id_emp in ('1000025','1000026').
+*
+*  LOOP AT te_empleados INTO es_empleados.
+*    WRITE: / es_empleados-id_emp, '|' , es_empleados-nomb_emp, '|' , es_empleados-apel_emp, '|' ,
+*             es_empleados-edad_emp, '|' , es_empleados-sexo_emp, '|' , es_empleados-sueldo, '|' ,
+*              es_empleados-moneda.
+*  ENDLOOP.
+*
+*ULINE.
+
+
+****************************SELECT USO DEL DISTINCT*************
+
+*  SELECT DISTINCT nomb_emp
+*    FROM zhrtt_empleados
+*    INTO CORRESPONDING FIELDS OF TABLE te_empleados.
+*
+*  LOOP AT te_empleados INTO es_empleados.
+*    WRITE: / es_empleados-nomb_emp.
+*  ENDLOOP.
+*
+
+****************************SELECT USO DEL COUNT************
+*siempre limpiar las variables antes de consultar
+
+CLEAR: gv_cant_registros,gv_max_sueldo,gv_min_sueldo,gv_avg_sueldo,gv_sum_sueldo.
+
+  SELECT COUNT(*) MAX( sueldo ) MIN( sueldo ) AVG( sueldo ) SUM( sueldo )
+    FROM zhrtt_empleados
+    INTO (gv_cant_registros, gv_max_sueldo, gv_min_sueldo, gv_avg_sueldo, gv_sum_sueldo ).
+
+  WRITE: / 'Cant Reg' , gv_cant_registros.
+  WRITE: / 'max' , gv_max_sueldo.
+  WRITE: / 'min' , gv_min_sueldo.
+  WRITE: / 'promedio' , gv_avg_sueldo.
+  WRITE: / 'la suma' , gv_sum_sueldo.
+
+  ULINE.
+
+*-///////////IMPRIMIMOS//////////////////////
+  SELECT *
+FROM zhrtt_empleados
+INTO CORRESPONDING FIELDS OF TABLE te_empleados.
+
+  LOOP AT te_empleados INTO es_empleados.
+    WRITE: / es_empleados-id_emp, '|' , es_empleados-nomb_emp, '|' , es_empleados-apel_emp, '|' ,
+             es_empleados-edad_emp, '|' , es_empleados-sexo_emp, '|' , es_empleados-sueldo, '|' ,
+              es_empleados-moneda.
+  ENDLOOP.
   
   
   
