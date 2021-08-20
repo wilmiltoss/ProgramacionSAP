@@ -1,0 +1,18 @@
+REPORT  ZHR_EMPLEADOS.
+
+TABLES: zhrtt_empleados,e070.
+
+
+*PARA USO DE LAS SUBRUTINAS PERFORM 2
+DATA: gv_resultado TYPE i, gv_div(10) TYPE p DECIMALS 2.
+DATA: te_empleados TYPE TABLE OF zhrtt_empleados.
+DATA: es_empleados LIKE LINE OF te_empleados.
+DATA: gv_flag_exito TYPE c.
+
+*PARA USO DEL ALL TRANSACTION, llamado de otras transacciones
+"declaramos la tabla interna te_bcdata_tab y le crea la estructura bdcdata
+DATA:  te_bdcdata_tab TYPE TABLE OF bdcdata
+      ,
+      es_bdcdata_va LIKE LINE OF te_bdcdata_tab.
+
+DATA es_opt TYPE ctu_params. "ctu_params son parametros utilizados para hacer CALL TRANSACTION
