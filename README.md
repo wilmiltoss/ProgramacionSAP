@@ -1,2 +1,0 @@
-# ProgramacionSAP
-Ejemplos de programaci
