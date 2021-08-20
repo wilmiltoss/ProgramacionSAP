@@ -1,0 +1,37 @@
+**********************************************************************************************************************************
+*&---------------------------------------------------------------------*
+*                           INITIALIZATION                             *
+*&---------------------------------------------------------------------*
+INITIALIZATION.
+
+*&---------------------------------------------------------------------*
+*                          AT SELECTION-SCREEN                         *
+*&---------------------------------------------------------------------*
+AT SELECTION-SCREEN.
+
+*&---------------------------------------------------------------------*
+*                          START-OF-SELECTION                          *
+*&---------------------------------------------------------------------*
+START-OF-SELECTION.
+
+
+END-OF-SELECTION.
+
+
+****************************USO DE LAS SUBRUTINAS PERFORM*************
+
+  CLEAR gv_flag_exito.
+
+  PERFORM buscar_datos TABLES te_empleados
+                       USING p_id_emp " este es fijo no cambia
+                       CHANGING gv_flag_exito."CHANGING el valor q le pasamos puede cambiar
+
+
+
+  IF gv_flag_exito IS NOT INITIAL.
+    PERFORM imprimir_datos TABLES te_empleados.
+    PERFORM finalizar.
+  ELSE.
+    WRITE: / 'No se encontraron valores para la busqueda utilitarios'.
+
+  ENDIF.
