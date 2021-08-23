@@ -406,3 +406,19 @@ BREAK-POINT. "se detiene automaticamente en esta linea en el debug
 
 END-OF-SELECTION.
   WRITE:  'fin' .
+  
+  
+  
+****************************USO DE MEMORIA ABAP*************
+BREAK BCUSER.
+
+FREE MEMORY ID 'ZHR_ID_EMP'."Le colocamos un nombre al espacio de memoria
+EXPORT p_id_emp TO MEMORY ID 'ZHR_ID_EMP'."Exporta el parametro d entrada p_id_emp a la memoria 'ZHR_ID_EMP'
+
+CLEAR p_id_emp."borramos el parametro
+
+IMPORT p_id_emp FROM MEMORY ID 'ZHR_ID_EMP'."Importamos de la memoria
+
+WRITE: / p_id_emp.
+FREE MEMORY ID 'zhr_ID_EMP'."limpiamos la memoria
+
