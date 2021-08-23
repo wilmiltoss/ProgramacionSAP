@@ -12,6 +12,9 @@ AT SELECTION-SCREEN.
 *                          START-OF-SELECTION                          *
 *&---------------------------------------------------------------------*
 START-OF-SELECTION.
+
+BREAK-POINT. "se detiene automaticamente en esta linea en el debug
+
 *Obtenemos el resultado de la suma
 *  gv_resultado = p_num1 + p_num2.
 *  WRITE:/'El valor:', p_num1, '+ el valor', p_num2, 'es:', gv_resultado.
